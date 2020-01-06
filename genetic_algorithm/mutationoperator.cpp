@@ -18,7 +18,7 @@ void GeneticMutationOperator::operator()()
         for (uint32_t g = 0; g < chromosome.getSize(); ++g) {
             double randomNumber = ((double) rand() / (RAND_MAX)); 
             
-            if (configObject->MUTATION_PROBABILITY > randomNumber) {
+            if (configObject->mutationProbability > randomNumber) {
                 chromosome.set(g, !chromosome.at(g));
             }
         }

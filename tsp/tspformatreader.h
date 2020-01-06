@@ -4,7 +4,7 @@
 class TspFormatReader
 {
 public:
-    Graph buildGraph();
+
 };
 
 #endif

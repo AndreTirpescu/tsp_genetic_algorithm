@@ -5,58 +5,55 @@
 #include "selectionoperator.h"
 #include "gautils.h"
 
-GeneticSelectionOperator::GeneticSelectionOperator(Population *pop, GeneticAlgorithmConfig *cfg,
-    const GaFunction& func, uint32_t dim) 
+GeneticSelectionOperator::GeneticSelectionOperator(Population *pop, GeneticAlgorithmConfig *cfg, TspEvaluator * evaluator) 
     : population(pop)
     , configObject(cfg)
-    , function(func)
-    , dimensions(dim)
+    , evaluator(evaluator)
 {}
 
 void GeneticSelectionOperator::operator()()
 {
     uint32_t sz = population->getSize();
+    uint32_t    ii;
+    uint32_t    jj;
+    double      T;
+    
     std::vector<double> eval(sz);
     std::vector<double> q(sz);
     std::vector<double> p(sz);
 
-    double T        = 0;
+    for (ii = 0; ii < population->getSize(); ++ii) {
+        std::vector<int> array = GaUtils::chromosomeToIntArray(population->at(ii));
 
-    for (uint32_t i = 0; i < population->getSize(); ++i) {
-        std::vector<double> array = GaUtils::chromosomeToArray(
-            population->at(i), 
-            function.getMinDomain(),
-            function.getMaxDomain(),
-            *configObject
-        );
-
-        function.setData(array);
-        
-        eval[i] = 1 / function();
-        T += eval[i];
+        eval[ii] = 1 / evaluator->evaluate(array);
+        T += eval[ii];
     }
 
-    for (uint32_t i = 0; i < population->getSize(); ++i) {
-        p[i] = eval[i] / T;
+    for (ii = 0; ii < population->getSize(); ++ii) {
+        p[ii] = eval[ii] / T;
     }
 
     q[0] = 0;
-    for (uint32_t i = 0; i < population->getSize() - 1; ++i) {
-        q[i+1] = q[i] + p[i];
+    for (ii = 0; ii < population->getSize() - 1; ++ii) {
+        q[ii+1] = q[ii] + p[ii];
     }
 
-    Population newPop(configObject->POPULATION_SIZE);
+    Population newPop(configObject->populationSize);
 
-    for (uint32_t i = 0; i < newPop.getSize(); ) {
+    for (ii = 0; ii < newPop.getSize(); ) {
+        
         double randomNumber = ((double) rand() / (RAND_MAX)); 
-        for (uint32_t j = 0; j < population->getSize() - 1; ++j) {
-            if (q[j] < randomNumber && randomNumber < q[j+1]) {
-                newPop.addChromosome(population->at(j));
-                ++i;
+        
+        for (jj = 0; jj < population->getSize() - 1; ++jj) {
+        
+            if (q[jj] < randomNumber && randomNumber < q[jj + 1]) {
+        
+                newPop.addChromosome(population->at(jj));
+        
+                ++ii;
             }
         }
     }
 
     population->reset(newPop);
 }
-

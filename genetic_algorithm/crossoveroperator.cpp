@@ -15,7 +15,7 @@ void GeneticCrossoverOperator::operator()()
     fillCrossover();
     sortCrossoverData();
 
-    for (uint32_t i = 0; i < population->getSize() && crossoverData[i].probability < configObject->CROSSOVER_PROBABILITY; i += 2) {
+    for (uint32_t i = 0; i < population->getSize() && crossoverData[i].probability < configObject->crossoverProbability; i += 2) {
         crossoverChromosomes(i, i+1);
     }
     

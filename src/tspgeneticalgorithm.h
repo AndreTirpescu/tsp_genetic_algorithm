@@ -5,26 +5,28 @@
 #include "geneticalgorithmconfig.h"
 #include "gafunction.h"
 #include "igeneticoperator.h"
+#include "undirectedgraph.h"
+#include "tspevaluator.h"
 
-class MinimaGeneticAlgorithm
+class TspGeneticAlgorithm
 {
 public:
-    MinimaGeneticAlgorithm(GaFunction func, CustomPopulationGenerator generator, 
-        GeneticAlgorithmConfig configObject);
+    TspGeneticAlgorithm(CustomPopulationGenerator generator, GeneticAlgorithmConfig configObject, UndirectedGraph *graph);
 
-    void run(uint32_t DIMENSION, const char* outputFile);
+    void run(const char* outputFile);
 
 private:
-    Population                  pop;
-    GaFunction                  function;
     CustomPopulationGenerator   generator;
     GeneticAlgorithmConfig      configObject;
+    UndirectedGraph             *graph;
+    Population                  pop;
     IGeneticOperator            *mutation;
     IGeneticOperator            *crossover;
     IGeneticOperator            *selection;
+    TspEvaluator                evaluator;
 
-    void                        generatePopulation(uint32_t DIMENSION);
-    void                        loadOperators(uint32_t DIMENSION);
+
+    void                        loadOperators();
     double                      getBestMinimum();
 };
 

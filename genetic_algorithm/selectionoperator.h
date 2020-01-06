@@ -5,23 +5,23 @@
 #include "population.h"
 #include "geneticalgorithmconfig.h"
 #include "gafunction.h"
+#include "tspevaluator.h"
+
+#include <functional>
+
 
 
 class GeneticSelectionOperator : public IGeneticOperator 
 {
 public:
-    GeneticSelectionOperator(Population *pop, GeneticAlgorithmConfig *cfg, const GaFunction& func, 
-        uint32_t dim);
+    GeneticSelectionOperator(Population *pop, GeneticAlgorithmConfig *cfg, TspEvaluator * evaluator);
 
     void operator()() override;
 
-    // shouldn't be here but time
-    double*  chromosomeToArray(Chromosome c);
 private:
     Population                  *population;
     GeneticAlgorithmConfig      *configObject;
-    GaFunction                  function;
-    uint32_t                    dimensions;
+    TspEvaluator                *evaluator;
 };
 
 #endif

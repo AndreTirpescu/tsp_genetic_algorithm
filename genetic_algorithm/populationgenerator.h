@@ -3,11 +3,12 @@
 
 #include <cstdint>
 #include "population.h"
+#include "geneticalgorithmconfig.h"
 
 class CustomPopulationGenerator
 {
 public:
-    Population generatePopulation(uint32_t popSz, double delta, uint32_t precision, uint32_t dimension);
+    Population generatePopulation(const GeneticAlgorithmConfig& config);
 };
 
 #endif

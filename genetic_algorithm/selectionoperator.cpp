@@ -40,7 +40,7 @@ void GeneticSelectionOperator::operator()()
 
     Population newPop(configObject->populationSize);
 
-    for (ii = 0; ii < newPop.getSize(); ) {
+    for (ii = 0; ii < newPop.getSize();) {
         
         double randomNumber = ((double) rand() / (RAND_MAX)); 
         

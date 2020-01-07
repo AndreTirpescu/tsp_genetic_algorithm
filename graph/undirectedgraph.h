@@ -21,9 +21,9 @@ public:
 
     uint32_t getSize() const;
  
-    void linkNodes(uint32_t indexA, uint32_t indexB);
+    UndirectedGraph& linkNodes(uint32_t indexA, uint32_t indexB);
 
-    void setEdgeValue(uint32_t indexA, uint32_t indexB, double value);
+    UndirectedGraph& setEdgeValue(uint32_t indexA, uint32_t indexB, double value);
     
     void parseDFS(uint32_t startNodeIndex, std::function<void(uint32_t)> callback);
 
@@ -36,6 +36,8 @@ public:
     bool areNodeAdjacent(uint32_t indexA, uint32_t indexB);
 
     bool isPath(std::vector<int> nodeList);
+
+    bool allNodesExist(std::vector<int> nodeList);
 
     double getEdgeValue(uint32_t indexA, uint32_t indexB);
 

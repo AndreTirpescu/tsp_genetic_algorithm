@@ -9,6 +9,7 @@ Population CustomPopulationGenerator::generatePopulation(const GeneticAlgorithmC
     uint32_t        popIndex;
     uint32_t        chrIndex;
     uint32_t        chrSize;
+    uint32_t        number;
 
     Population result(config.populationSize);
 
@@ -20,9 +21,19 @@ Population CustomPopulationGenerator::generatePopulation(const GeneticAlgorithmC
 
         Chromosome c(chrSize);
 
+        
+
         for(chrIndex = 0; chrIndex < chrSize; ++chrIndex) {
-            c.addGene(rand() % 2);
+            number = rand() % 5 + 1;
+            
+            while (number)
+            {
+                c.addGene(number % 2);
+                number /= 10;
+            }
         }
+
+        result.addChromosome(c);
     
     }
  

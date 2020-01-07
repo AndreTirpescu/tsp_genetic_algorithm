@@ -5,7 +5,7 @@ TspEvaluator::TspEvaluator(UndirectedGraph *graph) : graph(graph)
 
 double TspEvaluator::evaluate(std::vector<int> nodes)
 {
-    if (!graph->isPath(nodes)) {
+    if (!graph->allNodesExist(nodes) || !graph->isPath(nodes)) {
         return INVALID_VALUE;
     }
 

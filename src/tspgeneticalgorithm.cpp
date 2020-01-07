@@ -26,7 +26,7 @@ void TspGeneticAlgorithm::run(const char* outputFile)
     double minn;
     uint32_t T;
 
-    configObject.dimension = graph->getSize() + 1;
+    configObject.dimension = graph->getSize();
 
     pop = generator.generatePopulation(configObject);
 

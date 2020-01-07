@@ -16,16 +16,20 @@ uint32_t UndirectedGraph::getSize() const
     return size;
 }
 
-void UndirectedGraph::linkNodes(uint32_t indexA, uint32_t indexB)
+UndirectedGraph& UndirectedGraph::linkNodes(uint32_t indexA, uint32_t indexB)
 {
     adjacenyList[indexA].push_back(indexB);
     adjacenyList[indexB].push_back(indexA);
+
+    return *this;
 }
 
-void UndirectedGraph::setEdgeValue(uint32_t indexA, uint32_t indexB, double value)
+UndirectedGraph& UndirectedGraph::setEdgeValue(uint32_t indexA, uint32_t indexB, double value)
 {
     edgesValues[ {indexA, indexB} ] = value;
     edgesValues[ {indexB, indexA} ] = value;
+
+    return *this;
 }
 
 void UndirectedGraph::parseDFS(uint32_t startNodeIndex, std::function<void(uint32_t)> onVisit)
@@ -130,4 +134,15 @@ bool UndirectedGraph::isPath(std::vector<int> nodeList)
 double UndirectedGraph::getEdgeValue(uint32_t indexA, uint32_t indexB)
 {
     return edgesValues[{indexA, indexB}];
+}
+
+bool UndirectedGraph::allNodesExist(std::vector<int> nodeList)
+{
+    for (auto it : nodeList) {
+        if (it < 1 || it > size - 1) {
+            return false;
+        }
+    }
+
+    return true;
 }

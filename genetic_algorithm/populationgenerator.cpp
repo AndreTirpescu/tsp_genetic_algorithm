@@ -5,37 +5,23 @@
 
 Population CustomPopulationGenerator::generatePopulation(const GeneticAlgorithmConfig& config)
 {
-    const uint32_t  BIT_LENGTH = 32;
-    uint32_t        popIndex;
-    uint32_t        chrIndex;
-    uint32_t        chrSize;
-    uint32_t        number;
+    uint32_t N          = (config.dimension - 1) * pow(10, config.precision);
+    uint32_t bitLength  = ceil(log2(N));
+    uint32_t ii, jj;
 
     Population result(config.populationSize);
 
     srand(time(0));
 
-    for (popIndex = 0; popIndex < config.populationSize; ++popIndex) {
+    for (ii = 0; ii < config.populationSize; ++ii) {
+        Chromosome c(bitLength * config.dimension);
         
-        chrSize = BIT_LENGTH * config.dimension;
-
-        Chromosome c(chrSize);
-
-        
-
-        for(chrIndex = 0; chrIndex < chrSize; ++chrIndex) {
-            number = rand() % 5 + 1;
-            
-            while (number)
-            {
-                c.addGene(number % 2);
-                number /= 10;
-            }
+        for (jj = 0; jj < bitLength * config.dimension; ++jj) {
+            c.addGene(rand() % 2);
         }
 
         result.addChromosome(c);
-    
     }
- 
+
     return result;
 }

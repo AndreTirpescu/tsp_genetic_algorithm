@@ -5,15 +5,16 @@
 #include "selectionoperator.h"
 #include "gautils.h"
 
-GeneticSelectionOperator::GeneticSelectionOperator(Population *pop, GeneticAlgorithmConfig *cfg, TspEvaluator * evaluator) 
+GeneticSelectionOperator::GeneticSelectionOperator(Population *pop, GeneticAlgorithmConfig *cfg, TspEvaluator * evaluator, UndirectedGraph *graph) 
     : population(pop)
     , configObject(cfg)
     , evaluator(evaluator)
+    , graph(graph)
 {}
 
 void GeneticSelectionOperator::operator()()
 {
-    uint32_t sz = population->getSize();
+    uint32_t    sz = population->getSize();
     uint32_t    ii;
     uint32_t    jj;
     double      T;
@@ -23,9 +24,10 @@ void GeneticSelectionOperator::operator()()
     std::vector<double> p(sz);
 
     for (ii = 0; ii < population->getSize(); ++ii) {
-        std::vector<int> array = GaUtils::chromosomeToIntArray(population->at(ii));
+        std::vector<int> array = GaUtils::chromosomeToIntArray(population->at(ii), 1, graph->getSize() + 1);
 
         eval[ii] = 1 / evaluator->evaluate(array);
+
         T += eval[ii];
     }
 

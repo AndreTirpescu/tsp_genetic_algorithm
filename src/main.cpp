@@ -15,10 +15,11 @@ int main()
 
     config.populationSize          = 100;	
     config.maxGenerations          = 100000;	
-    config.mutationProbability     = 0.01;	
-    config.crossoverProbability    = 0.2;
+    config.mutationProbability     = 0.2;	
+    config.crossoverProbability    = 0.4;
+    config.precision               = 0;
     
-    UndirectedGraph graph(6);
+    UndirectedGraph graph(5);
     graph.linkNodes(1, 2).setEdgeValue(1, 2, 20);
     graph.linkNodes(1, 5).setEdgeValue(1, 5, 60);
     graph.linkNodes(1, 4).setEdgeValue(1, 4, 30);

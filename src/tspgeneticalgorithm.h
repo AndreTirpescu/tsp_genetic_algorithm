@@ -24,10 +24,12 @@ private:
     IGeneticOperator            *crossover;
     IGeneticOperator            *selection;
     TspEvaluator                evaluator;
+    std::vector<int>            bestSol;
+    double                      globalMinimum;
 
 
-    void                        loadOperators();
-    double                      getBestMinimum();
+    void        loadOperators();
+    std::pair<double, std::vector<int> >      getBestMinimum();
 };
 
 #endif

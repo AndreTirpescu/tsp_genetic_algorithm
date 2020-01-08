@@ -14,7 +14,7 @@
 class GeneticSelectionOperator : public IGeneticOperator 
 {
 public:
-    GeneticSelectionOperator(Population *pop, GeneticAlgorithmConfig *cfg, TspEvaluator * evaluator);
+    GeneticSelectionOperator(Population *pop, GeneticAlgorithmConfig *cfg, TspEvaluator * evaluator, UndirectedGraph *graph);
 
     void operator()() override;
 
@@ -22,6 +22,7 @@ private:
     Population                  *population;
     GeneticAlgorithmConfig      *configObject;
     TspEvaluator                *evaluator;
+    UndirectedGraph             *graph;
 };
 
 #endif

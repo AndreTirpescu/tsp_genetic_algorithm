@@ -6,7 +6,7 @@
 
 UndirectedGraph::UndirectedGraph(uint32_t size) 
     : size(size)
-    , adjacenyList(size)
+    , adjacenyList(size + 1)
     , edgesValues()
 {
 }
@@ -117,7 +117,7 @@ bool UndirectedGraph::areNodeAdjacent(uint32_t indexA, uint32_t indexB)
     return false;
 }
 
-bool UndirectedGraph::isPath(std::vector<int> nodeList)
+bool UndirectedGraph::isPath(const std::vector<int>& nodeList)
 {
     uint32_t index;
     uint32_t sz = nodeList.size();
@@ -136,13 +136,27 @@ double UndirectedGraph::getEdgeValue(uint32_t indexA, uint32_t indexB)
     return edgesValues[{indexA, indexB}];
 }
 
-bool UndirectedGraph::allNodesExist(std::vector<int> nodeList)
+bool UndirectedGraph::isHamiltonianCycle(const std::vector<int>& nodeList)
 {
-    for (auto it : nodeList) {
-        if (it < 1 || it > size - 1) {
+    std::vector<bool> visited(size + 1);
+
+    uint32_t index;
+    uint32_t sz = nodeList.size();
+
+    for (index = 0; index < sz - 1; ++index) {
+        if (!areNodeAdjacent( nodeList[index], nodeList[index + 1] )) {
+            return false;
+        }
+
+        visited[ nodeList[index] ] = 1;
+        visited[ nodeList[index + 1] ] = 1;
+    }
+
+    for (index = 1; index <= size; ++index) {
+        if (!visited[index]) {
             return false;
         }
     }
 
-    return true;
+    return areNodeAdjacent(nodeList[nodeList.size() - 1], nodeList[0]);
 }

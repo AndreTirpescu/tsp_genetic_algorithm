@@ -7,10 +7,10 @@ struct GeneticAlgorithmConfig
 {
     uint32_t    populationSize;
     uint32_t    maxGenerations;
-    double      mutationProbability;
-    double      crossoverProbability;
     uint32_t    precision;
     uint32_t    dimension;
+    double      mutationProbability;
+    double      crossoverProbability;
 };
 
 

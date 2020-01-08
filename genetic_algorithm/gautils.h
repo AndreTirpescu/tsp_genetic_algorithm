@@ -35,31 +35,29 @@ public:
         return result;
     }
 
-    static std::vector<int> chromosomeToIntArray(Chromosome chromosome)
+    static std::vector<int> chromosomeToIntArray(Chromosome chromosome, double a, double b)
     {
-        const uint32_t      BIT_LENGTH = 32;
-        std::vector <int>   result;
-
-        int  chrIndex;
-        int  numberIndex;
-        int  numberIndexStart;
-        int  number;
-        int  powCnt;
-
-        for (chrIndex = 0; chrIndex < (int)chromosome.getSize(); chrIndex += BIT_LENGTH) {
+        double      delta      = abs(b - a) ;
+        uint32_t    N          = delta * pow(10, 0);
+        uint32_t    n          = ceil(log2(N));
+        int         decimal;
+        uint32_t    k;
             
-            numberIndexStart = chrIndex + BIT_LENGTH - 1;
-            
-            number = 0;
-            powCnt = 0;
+        std::vector<int> result;
 
-            for (numberIndex = numberIndexStart; numberIndex >= (int)chrIndex; --numberIndex) {
-                number += pow(2, powCnt++) * chromosome.at(numberIndex); 
+        for (int i = 0; i < (int)chromosome.getSize(); i += n) {
+            decimal = 0;
+            k = 0;
+
+            for(int j = i + n - 1; j >= (int)i; --j) {
+                decimal += chromosome.at(j) * pow(2, k++); 
             }
 
-            result.push_back(number);
+            double x = a + decimal * delta / (pow(2, n) - 1);
+
+            result.push_back((int)x);
         }
-        
+
         return result;
     }
 

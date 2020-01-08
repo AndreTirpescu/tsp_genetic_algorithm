@@ -35,11 +35,11 @@ public:
 
     bool areNodeAdjacent(uint32_t indexA, uint32_t indexB);
 
-    bool isPath(std::vector<int> nodeList);
-
-    bool allNodesExist(std::vector<int> nodeList);
+    bool isPath(const std::vector<int>& nodeList);
 
     double getEdgeValue(uint32_t indexA, uint32_t indexB);
+
+    bool isHamiltonianCycle(const std::vector<int>& nodeListt);
 
 private:
     uint32_t                                                size;    

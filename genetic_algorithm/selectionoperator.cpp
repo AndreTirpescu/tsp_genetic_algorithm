@@ -26,7 +26,6 @@ void GeneticSelectionOperator::operator()()
 
     for (ii = 0; ii < population->getSize(); ++ii) {
         std::vector<int> array = GaUtils::chromosomeToIntArray(population->at(ii), 1, graph->getSize());
-        GaUtils::normalize(population->at(ii), 1, graph->getSize(), *configObject);
         eval[ii] = 1 / evaluator->evaluate(array);
 
         T += eval[ii];

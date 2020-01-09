@@ -25,7 +25,7 @@ void TspGeneticAlgorithm::run(const char* outputFile)
 {
     uint32_t    T;
 
-    configObject.dimension = graph->getSize() + 1;
+    configObject.dimension = graph->getSize();
 
     pop = generator.generatePopulation(configObject);
 
@@ -50,9 +50,12 @@ void TspGeneticAlgorithm::run(const char* outputFile)
 
         std::cout << "Generation: " << T << '\t' << "Minimum: " << globalMinimum << '\t';
 
-        for (auto it : bestSol) {
-            std::cout << it << ' '; 
+        double sum = 0;
+        for (int it = 0; it < (int)bestSol.size() - 1; ++it) {
+            sum += graph->getEdgeValue(bestSol[it], bestSol[it + 1]);
         }
+
+        std::cout << "Best SOL val: " << sum;
 
         std::cout << '\n';
     }
@@ -73,7 +76,7 @@ std::pair<double, std::vector<int> > TspGeneticAlgorithm::getBestMinimum()
     std::vector<int> minArray;
 
     for (uint32_t i = 0; i < pop.getSize(); ++i) {
-        std::vector<int> array = GaUtils::chromosomeToIntArray(pop.at(i), 1, graph->getSize() + 1);
+        std::vector<int> array = GaUtils::chromosomeToIntArray(pop.at(i), 1, graph->getSize());
         double eval = evaluator.evaluate(array);
 
         if (eval < minimum) {

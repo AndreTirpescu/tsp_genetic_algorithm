@@ -15,7 +15,7 @@ public:
 
     Population& addChromosome(Chromosome chromosome);
 
-    const Chromosome& at(uint32_t index);
+    Chromosome& at(uint32_t index);
     void             set(uint32_t index, const Chromosome& chr);
 
     uint32_t    getSize();

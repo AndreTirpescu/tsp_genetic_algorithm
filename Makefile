@@ -1,4 +1,4 @@
-PROJECT_NAME := tema2_ag
+PROJECT_NAME := tsp_ga
 
 CXX	:= g++
 CXX_FLAGS := -Wall -Wextra -std=c++17 -ggdb

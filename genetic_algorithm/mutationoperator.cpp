@@ -2,7 +2,7 @@
 #include <cstdlib>
 
 #include <iostream>
-
+#include <ctime>
 
 GeneticMutationOperator::GeneticMutationOperator(Population *pop, GeneticAlgorithmConfig *cfg) 
     : population(pop)
@@ -11,7 +11,8 @@ GeneticMutationOperator::GeneticMutationOperator(Population *pop, GeneticAlgorit
 
 void GeneticMutationOperator::operator()()
 {
-    // very ugly
+    srand(time(0));
+
     for (uint32_t chr = 0; chr < population->getSize(); ++chr) {
         Chromosome chromosome = population->at(chr);
         

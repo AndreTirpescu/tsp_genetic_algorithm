@@ -1,43 +1,34 @@
 #include "tspevaluator.h"
 
+#include <set>
+
 TspEvaluator::TspEvaluator(UndirectedGraph *graph) : graph(graph)
 {}
 
 double TspEvaluator::evaluate(std::vector<int> nodes)
 {
     double solBias;
-    double pathBias;
     double diffBias;
     double sum;
-    uint32_t index, j;
+    uint32_t index;
 
-    if (graph->isPath(nodes)) {
-        pathBias = 0.0001;
+    std::set<int> uniqeNodes;
+
+    for (auto it : nodes) {
+        uniqeNodes.insert(it);
     }
-    else {
-        pathBias = 1000.0;
+
+    diffBias = 1.0 / uniqeNodes.size();
+
+    if (uniqeNodes.size() > 50) {
+        solBias = 0.0001;
     }
 
     if (graph->isHamiltonianCycle(nodes)) {
-        solBias = 0.0001;
+        solBias = 0.000001;
     }
     else {
-        solBias = 1000.0;
-    }
-
-    bool found = false;
-    for(index = 0; index < nodes.size() - 1; ++index) {
-        for (j = index + 1; j < nodes.size(); ++j) {
-            if (nodes[index] == nodes[j]) {
-                found = true;
-            }
-        }
-    }
-
-    if (!found) {
-        diffBias = 0.0001;
-    } else {
-        diffBias = 1000;
+        solBias = 1.0;
     }
 
     sum = 0;
@@ -49,5 +40,5 @@ double TspEvaluator::evaluate(std::vector<int> nodes)
         return INVALID_VALUE;
     }
 
-    return sum * solBias * pathBias * diffBias;
+    return sum * solBias * diffBias;
 }

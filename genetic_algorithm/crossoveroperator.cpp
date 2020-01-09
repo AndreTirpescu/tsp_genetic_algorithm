@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <ctime>
 
 GeneticCrossoverOperator::GeneticCrossoverOperator(Population *pop, GeneticAlgorithmConfig *cfg) 
     : population(pop)
@@ -23,6 +24,7 @@ void GeneticCrossoverOperator::operator()()
 
 void GeneticCrossoverOperator::fillCrossover()
 {
+    srand(time(0));
     for (uint32_t i = 0; i < population->getSize(); ++i) {
         crossoverData[i].index          = i;
         crossoverData[i].probability    = ((double) rand() / (RAND_MAX));
@@ -41,6 +43,8 @@ void GeneticCrossoverOperator::sortCrossoverData()
 
 void GeneticCrossoverOperator::crossoverChromosomes(uint32_t c1, uint32_t c2)
 {
+    srand(time(0));
+    
     population->increaseSize(2);
     
     Chromosome cc1, cc2;

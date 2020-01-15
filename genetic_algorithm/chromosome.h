@@ -8,7 +8,7 @@
 #include <memory>
 
 
-typedef bool Gene;
+typedef int Gene;
 
 class Chromosome
 {
@@ -16,11 +16,14 @@ public:
     Chromosome();
     Chromosome(uint32_t size);
 
+    Chromosome(const Chromosome& obj);
+
     Chromosome& addGene(Gene gene);
     uint32_t    getSize();
-    void        operator=(const Chromosome& ob);
+    void        operator=(const Chromosome& obj);
     Gene        at(uint32_t index);
     void        set(uint32_t index, const Gene& chr);
+    void        swap(uint32_t geneA, uint32_t geneB);
 
 private:
     uint32_t            size;

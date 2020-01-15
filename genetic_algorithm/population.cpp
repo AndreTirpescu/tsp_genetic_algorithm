@@ -31,7 +31,7 @@ Population& Population::addChromosome(Chromosome chromosome)
     return *this;
 }
 
-Chromosome& Population::at(uint32_t index)
+const Chromosome& Population::at(uint32_t index)
 {
     if (index > populationSize) {
 #ifdef GENETIC_DEBUG

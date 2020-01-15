@@ -28,6 +28,14 @@ private:
     void                        fillCrossover();
     void                        sortCrossoverData();
     void                        crossoverChromosomes(uint32_t c1, uint32_t c2);
+    void                        crossoverChromosomesPMX(uint32_t c1, uint32_t c2);
+
+    Chromosome                  copyToChild(Chromosome& parent);
+    int                         getRandomGenePieceSize(uint32_t chromosomeSize);
+    int                         getStartPosition(uint32_t genePieceSize, uint32_t chromosomeSize);
+    int                         extractFromMapping(const std::vector<int>& mapping, int index);
+    void                        cleanChildChromosome(Chromosome& child, const std::vector<int>& mapping, int index);
+
 };
 
 #endif

@@ -1,7 +1,10 @@
 #include "mutationoperator.h"
-#include <cstdlib>
 
+#include <cstdlib>
 #include <iostream>
+#include <random>
+#include <vector>
+#include <algorithm>
 #include <ctime>
 
 GeneticMutationOperator::GeneticMutationOperator(Population *pop, GeneticAlgorithmConfig *cfg) 
@@ -11,19 +14,24 @@ GeneticMutationOperator::GeneticMutationOperator(Population *pop, GeneticAlgorit
 
 void GeneticMutationOperator::operator()()
 {
-    srand(time(0));
+    std::mt19937 randomNumberGenerator(time(0));
+    std::uniform_real_distribution<double> distribution(0, 1);
+    
 
     for (uint32_t chr = 0; chr < population->getSize(); ++chr) {
         Chromosome chromosome = population->at(chr);
-        
-        for (uint32_t g = 0; g < chromosome.getSize(); ++g) {
-            double randomNumber = ((double) rand() / (RAND_MAX)); 
-            
-            if (configObject->mutationProbability > randomNumber) {
-                chromosome.set(g, !chromosome.at(g));
-            }
-        }
 
+        double randomNumber = distribution(randomNumberGenerator); 
+
+        if (configObject->mutationProbability > randomNumber) {
+            std::uniform_int_distribution<int> distribution(0, chromosome.getSize());
+
+            uint32_t randomGeneA = distribution(randomNumberGenerator);
+            uint32_t randomGeneB = distribution(randomNumberGenerator);
+
+            chromosome.swap(randomGeneA, randomGeneB);
+        }
+    
         population->set(chr, chromosome);
     }
 }

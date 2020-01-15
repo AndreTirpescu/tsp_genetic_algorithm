@@ -76,7 +76,7 @@ std::pair<double, std::vector<int> > TspGeneticAlgorithm::getBestMinimum()
     std::vector<int> minArray;
 
     for (uint32_t i = 0; i < pop.getSize(); ++i) {
-        std::vector<int> array = GaUtils::chromosomeToIntArray(pop.at(i), 1, graph->getSize());
+        std::vector<int> array = GaUtils::chromosomeToIntArray(pop.at(i));
         double eval = evaluator.evaluate(array);
 
         if (eval < minimum) {

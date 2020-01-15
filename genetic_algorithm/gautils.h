@@ -40,27 +40,12 @@ public:
         return result;
     }
 
-    static std::vector<int> chromosomeToIntArray(Chromosome chromosome, double a, double b)
+    static std::vector<int> chromosomeToIntArray(Chromosome chromosome)
     {
-        double      delta      = abs(b - a);
-        uint32_t    N          = delta * pow(10, 0);
-        uint32_t    n          = ceil(log2(N));
-        int         decimal;
-        uint32_t    k;
-            
         std::vector<int> result;
 
-        for (int i = 0; i < (int)chromosome.getSize(); i += n) {
-            decimal = 0;
-            k = 0;
-
-            for(int j = i + n - 1; j >= (int)i; --j) {
-                decimal += chromosome.at(j) * pow(2, k++); 
-            }
-
-            double x = a + decimal * delta / (pow(2, n) - 1);
-
-            result.push_back((int)x);
+        for (uint32_t i = 0; i < chromosome.getSize(); ++i) {
+            result.push_back( chromosome.at(i) );
         }
 
         return result;

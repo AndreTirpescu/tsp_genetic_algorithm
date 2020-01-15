@@ -67,7 +67,7 @@ void Chromosome::set(uint32_t index, const Gene& chr)
     genes[index] = chr;
 }
 
-void Chromosome::swap(uint32_t geneA, uint32_t geneB)
+void Chromosome::swapGenes(uint32_t geneA, uint32_t geneB)
 {
     std::swap(genes[geneA], genes[geneB]);
 }

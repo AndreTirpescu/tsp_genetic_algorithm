@@ -24,12 +24,12 @@ void GeneticMutationOperator::operator()()
         double randomNumber = distribution(randomNumberGenerator); 
 
         if (configObject->mutationProbability > randomNumber) {
-            std::uniform_int_distribution<int> distribution(0, chromosome.getSize());
+            std::uniform_int_distribution<int> distribution(0, chromosome.getSize() - 1);
 
             uint32_t randomGeneA = distribution(randomNumberGenerator);
             uint32_t randomGeneB = distribution(randomNumberGenerator);
 
-            chromosome.swap(randomGeneA, randomGeneB);
+            chromosome.swapGenes(randomGeneA, randomGeneB);
         }
     
         population->set(chr, chromosome);

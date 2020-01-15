@@ -9,7 +9,11 @@
 
 #include <functional>
 
-
+struct ChromosomeObjectMapper
+{
+    int     index;
+    double  eval;
+};
 
 class GeneticSelectionOperator : public IGeneticOperator 
 {
@@ -23,6 +27,9 @@ private:
     GeneticAlgorithmConfig      *configObject;
     TspEvaluator                *evaluator;
     UndirectedGraph             *graph;
+
+    void    elitistSelection();
+    void    wheelOfFortuneSelection();
 };
 
 #endif

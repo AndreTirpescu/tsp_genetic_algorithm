@@ -23,7 +23,7 @@ public:
     void        operator=(const Chromosome& obj);
     Gene        at(uint32_t index);
     void        set(uint32_t index, const Gene& chr);
-    void        swap(uint32_t geneA, uint32_t geneB);
+    void        swapGenes(uint32_t geneA, uint32_t geneB);
 
 private:
     uint32_t            size;

@@ -15,6 +15,41 @@ GeneticSelectionOperator::GeneticSelectionOperator(Population *pop, GeneticAlgor
 
 void GeneticSelectionOperator::operator()()
 {
+    wheelOfFortuneSelection();
+}
+
+
+void GeneticSelectionOperator::elitistSelection()
+{
+    uint32_t bestIndex;
+
+    std::vector<ChromosomeObjectMapper> chromosomes(population->getSize());
+
+    for (uint32_t i = 0; i < population->getSize(); ++i) {
+
+        chromosomes[i].index = i;
+        chromosomes[i].eval = 1 / evaluator->evaluate( GaUtils::chromosomeToIntArray(population->at(i)) );
+
+    }
+
+    sort(chromosomes.begin(), chromosomes.end(), [](const ChromosomeObjectMapper& objA, const ChromosomeObjectMapper& objB){
+        return objA.eval > objB.eval;
+    });
+
+    Population newPop(configObject->populationSize);
+
+    bestIndex = 0;
+
+    while (bestIndex < configObject->populationSize) {
+        newPop.addChromosome(population->at(bestIndex++));
+    }
+
+    population->reset(newPop);
+
+}
+
+void GeneticSelectionOperator::wheelOfFortuneSelection()
+{
     uint32_t    sz = population->getSize();
     uint32_t    ii;
     uint32_t    jj;

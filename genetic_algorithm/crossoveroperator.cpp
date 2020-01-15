@@ -18,7 +18,7 @@ void GeneticCrossoverOperator::operator()()
     sortCrossoverData();
 
     for (uint32_t i = 0; i < population->getSize() && crossoverData[i].probability < configObject->crossoverProbability; i += 2) {
-        crossoverChromosomes(i, i+1);
+        crossoverChromosomesPMX( crossoverData[i].index, crossoverData[i+1].index );
     }
     
 }
@@ -102,7 +102,7 @@ void GeneticCrossoverOperator::crossoverChromosomesPMX(uint32_t c1, uint32_t c2)
     }
 
     population->addChromosome(C1);
-    population->addChromosome(C1);
+    population->addChromosome(C2);
 }
 
 
@@ -135,10 +135,10 @@ int GeneticCrossoverOperator::getStartPosition(uint32_t genePieceSize, uint32_t 
 
 int GeneticCrossoverOperator::extractFromMapping(const std::vector<int>& mapping, int index)
 {
-    int next = mapping[index];
-    int current = next;
+    int next = index;
+    int current = index;
 
-    while (mapping[next] != -1) {
+    while (next != -1) {
         current = next;
         next = mapping[next];
     }
@@ -148,7 +148,7 @@ int GeneticCrossoverOperator::extractFromMapping(const std::vector<int>& mapping
 
 void GeneticCrossoverOperator::cleanChildChromosome(Chromosome& child, const std::vector<int>& mapping, int index)
 {
-    int mappedGene = extractFromMapping(mapping, index);
+    int mappedGene = extractFromMapping(mapping, child.at(index));
         
     if (-1 != mappedGene) {
         child.set(index, mappedGene);

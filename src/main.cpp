@@ -17,8 +17,8 @@ int main()
 
     config.populationSize          = 100;	
     config.maxGenerations          = 100000;	
-    config.mutationProbability     = 0.4;	
-    config.crossoverProbability    = 0.6;
+    config.mutationProbability     = 0.8;	
+    config.crossoverProbability    = 0.2;
     config.precision               = 0;
     
 

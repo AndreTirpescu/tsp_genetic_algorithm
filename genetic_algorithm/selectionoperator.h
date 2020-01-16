@@ -8,6 +8,7 @@
 #include "tspevaluator.h"
 
 #include <functional>
+#include <vector>
 
 struct ChromosomeObjectMapper
 {
@@ -30,6 +31,7 @@ private:
 
     void    elitistSelection();
     void    wheelOfFortuneSelection();
+    void    tournamentSelection();
 };
 
 #endif

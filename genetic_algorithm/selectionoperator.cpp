@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cmath>
 #include <ctime>
+#include <algorithm>
+#include <random>
 
 #include "selectionoperator.h"
 #include "gautils.h"
@@ -15,7 +17,7 @@ GeneticSelectionOperator::GeneticSelectionOperator(Population *pop, GeneticAlgor
 
 void GeneticSelectionOperator::operator()()
 {
-    wheelOfFortuneSelection();
+    tournamentSelection();
 }
 
 
@@ -26,10 +28,8 @@ void GeneticSelectionOperator::elitistSelection()
     std::vector<ChromosomeObjectMapper> chromosomes(population->getSize());
 
     for (uint32_t i = 0; i < population->getSize(); ++i) {
-
         chromosomes[i].index = i;
         chromosomes[i].eval = 1 / evaluator->evaluate( GaUtils::chromosomeToIntArray(population->at(i)) );
-
     }
 
     sort(chromosomes.begin(), chromosomes.end(), [](const ChromosomeObjectMapper& objA, const ChromosomeObjectMapper& objB){
@@ -88,6 +88,59 @@ void GeneticSelectionOperator::wheelOfFortuneSelection()
                 newPop.addChromosome(population->at(jj));
         
                 ++ii;
+            }
+        }
+    }
+
+    population->reset(newPop);
+}
+
+void GeneticSelectionOperator::tournamentSelection()
+{
+    uint32_t bestIndex;
+    int J;
+
+    std::vector<ChromosomeObjectMapper> com(population->getSize());
+
+    for (uint32_t i = 0; i < population->getSize(); ++i) {
+        com[i].index = i;
+        com[i].eval = 1 / evaluator->evaluate( GaUtils::chromosomeToIntArray(population->at(i)) );
+    }
+
+    sort(com.begin(), com.end(), [](const ChromosomeObjectMapper& objA, const ChromosomeObjectMapper& objB){
+        return objA.eval > objB.eval;
+    });
+
+    Population newPop(configObject->populationSize);
+
+    bestIndex = 0;
+    while (bestIndex < configObject->populationSize) {
+        
+        std::vector<int> tournamentCandidatesIndices;
+        std::vector<bool> viz(com.size(), 0);
+
+        for (int i = 0; i < (int)com.size(); ++i) {
+            tournamentCandidatesIndices.push_back(i);
+        }
+
+        std::mt19937 randomNumberGenerator(time(0));
+        std::uniform_int_distribution<int> distribution(0, com.size());
+
+        std::shuffle(tournamentCandidatesIndices.begin(), tournamentCandidatesIndices.end(), randomNumberGenerator);
+
+        J = distribution(randomNumberGenerator);
+        int cindex;
+        for (int i = 0; i < J; ++i) {
+            cindex = com[ tournamentCandidatesIndices[i] ].index;
+            if (!viz[cindex]) {
+                newPop.addChromosome( population->at( cindex ) );
+                bestIndex++;
+                
+                if (bestIndex >= configObject->populationSize) {
+                    break;
+                }
+
+                viz[cindex] = 1; 
             }
         }
     }

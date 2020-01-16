@@ -35,6 +35,8 @@ void TspGeneticAlgorithm::run(const char* outputFile)
     fout.open(outputFile, std::ios::app);
 
     globalMinimum = INF;
+
+    uint32_t breakWhenNoChange;
     
     for (T = 0; T < configObject.maxGenerations; ++T) {
         (*mutation)();
@@ -46,7 +48,15 @@ void TspGeneticAlgorithm::run(const char* outputFile)
         if (minData.first < globalMinimum) {
             globalMinimum =  minData.first;
             bestSol = minData.second;
+            breakWhenNoChange = 0;
         }
+        else {
+            breakWhenNoChange++;
+            if (breakWhenNoChange > 10000) {
+                break;
+            }
+        }
+
 
         std::cout << "Generation: " << T << '\t' << "Minimum: " << globalMinimum << '\t';
 

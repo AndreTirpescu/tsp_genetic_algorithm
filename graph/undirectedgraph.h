@@ -33,13 +33,15 @@ public:
 
     std::vector<uint32_t> getBfsOrder(uint32_t startNodeIndex);
 
-    bool areNodeAdjacent(uint32_t indexA, uint32_t indexB);
+    bool areNodeAdjacent(uint32_t indexA, uint32_t indexB) const;
 
-    bool isPath(const std::vector<int>& nodeList);
+    bool isPath(const std::vector<int>& nodeList) const;
 
-    double getEdgeValue(uint32_t indexA, uint32_t indexB);
+    double getEdgeValue(uint32_t indexA, uint32_t indexB) const;
 
-    bool isHamiltonianCycle(const std::vector<int>& nodeListt);
+    bool isHamiltonianCycle(const std::vector<int>& nodeListt) const;
+
+    const std::vector<uint32_t>& getNeighbors(uint32_t node) const;
 
 private:
     uint32_t                                                size;    

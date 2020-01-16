@@ -106,7 +106,7 @@ std::vector<uint32_t> UndirectedGraph::getBfsOrder(uint32_t startNodeIndex)
     return result;
 }
 
-bool UndirectedGraph::areNodeAdjacent(uint32_t indexA, uint32_t indexB)
+bool UndirectedGraph::areNodeAdjacent(uint32_t indexA, uint32_t indexB) const
 {
     for (uint32_t it : adjacenyList[indexA]) {
         if (indexB == it) {
@@ -117,7 +117,7 @@ bool UndirectedGraph::areNodeAdjacent(uint32_t indexA, uint32_t indexB)
     return false;
 }
 
-bool UndirectedGraph::isPath(const std::vector<int>& nodeList)
+bool UndirectedGraph::isPath(const std::vector<int>& nodeList) const
 {
     uint32_t index;
     uint32_t sz = nodeList.size();
@@ -131,12 +131,12 @@ bool UndirectedGraph::isPath(const std::vector<int>& nodeList)
     return true;
 }
 
-double UndirectedGraph::getEdgeValue(uint32_t indexA, uint32_t indexB)
+double UndirectedGraph::getEdgeValue(uint32_t indexA, uint32_t indexB) const
 {
-    return edgesValues[{indexA, indexB}];
+    return edgesValues.at({indexA, indexB});
 }
 
-bool UndirectedGraph::isHamiltonianCycle(const std::vector<int>& nodeList)
+bool UndirectedGraph::isHamiltonianCycle(const std::vector<int>& nodeList) const
 {
     std::vector<bool> visited(size + 1);
 
@@ -159,4 +159,9 @@ bool UndirectedGraph::isHamiltonianCycle(const std::vector<int>& nodeList)
     }
 
     return areNodeAdjacent(nodeList[nodeList.size() - 1], nodeList[0]);
+}
+
+const std::vector<uint32_t>& UndirectedGraph::getNeighbors(uint32_t node) const
+{
+    return adjacenyList[node];
 }
